@@ -5,16 +5,16 @@ Don't import directly from third-party code; use the `locale` module instead!
 """
 
 import sys
-import _locale
+import locale
 
 if sys.platform.startswith("win"):
     def getpreferredencoding(do_setlocale=True):
         if sys.flags.utf8_mode:
             return 'UTF-8'
-        return _locale._getdefaultlocale()[1]
+        return locale._getdefaultlocale()[1]
 else:
     try:
-        _locale.CODESET
+        locale.CODESET
     except AttributeError:
         if hasattr(sys, 'getandroidapilevel'):
             # On Android langinfo.h and CODESET are missing, and UTF-8 is
@@ -34,7 +34,7 @@ else:
             assert not do_setlocale
             if sys.flags.utf8_mode:
                 return 'UTF-8'
-            result = _locale.nl_langinfo(_locale.CODESET)
+            result = locale.nl_langinfo(locale.CODESET)
             if not result and sys.platform == 'darwin':
                 # nl_langinfo can return an empty string
                 # when the setting has an invalid value.
