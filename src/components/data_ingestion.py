@@ -6,6 +6,7 @@ from src.exception import CustomException
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
+from dataclasses import dataclass
 
 
 
@@ -19,7 +20,7 @@ class DataIngestion :
         self.ingestion_config = DataIngestionConfig()
     
     def initiate_data_ingestion(self) :
-        logging.info("Entereed the data ingestion method or component")
+        logging.info("Entered the data ingestion method or component")
         try :
             df=pd.read_csv('notebook\data\stud.csv')
             logging.info("Read the dataset as dataframe")
