@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./venv/Lib/site-packages/pandas/_testing"
+        "./venv/Lib/site-packages/pandas/_testing",
+        "./venv/Lib/site-packages"
     ]
 }
