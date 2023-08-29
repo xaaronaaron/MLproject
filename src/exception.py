@@ -18,8 +18,8 @@ class CustomException(Exception) : #inherits from Exception
     def __str__(self) :
         return self.error_message
     
-"""
-if __name__=="__main__" :
+
+"""if __name__=="__main__" :
 
     try : 
         a = 1/0
