@@ -31,15 +31,16 @@ class DataTransformation :
 
             num_pipeline = Pipeline(
                 steps = [
-                    ("imputer", SimpleImputer(strategy="median")), 
-                    ("scaler", StandardScaler(with_mean=False))
+                    ("imputer", SimpleImputer(strategy="median")), #simpleImputer fills in missing values - here we fill in with the median
+                    ("scaler", StandardScaler(with_mean=False)) #standardScaler is to scale numerical values down to similar scales/magnitudes. SS subtracts each 
+                    # data point with the mean and divides it with the SD 
                 ]
             )
 
             categorical_pipeline = Pipeline(
                 steps = [
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder()),
+                    ("one_hot_encoder", OneHotEncoder()), #converts categorical values to binary classes 0100, 0010 etc or just 0 and 1. depends on number of attributes.
                     ("scaler", StandardScaler(with_mean=False))
                 ]
 
@@ -48,7 +49,7 @@ class DataTransformation :
             logging.info(f"Numerical columns : {numerical_columns}")
             logging.info(f"Categorical columns : {categorical_columns}")
 
-            #Combining the two pipelines above using column transformer
+            #Applying the pipelines to their respective columns
             preprocessor = ColumnTransformer(
                 [
                     ("num_pipeline", num_pipeline, numerical_columns),
@@ -87,7 +88,7 @@ class DataTransformation :
             input_feature_train_arr = preprocessor_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessor_obj.transform(input_feature_test_df)
 
-            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
+            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)] # np.c_() is used to concatenate two arrays
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info("Saved preprocessing object")
